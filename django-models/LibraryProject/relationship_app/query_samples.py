@@ -41,15 +41,15 @@ def get_books_in_library(library_name):
 # -----------------------------
 # 3️⃣ Retrieve the librarian for a library
 # -----------------------------
-def get_librarian_for_library(library_name):
+def get_librarian_for_library(librarian_name):
     try:
-        library = Library.objects.get(name=library_name)
+        library = Librarian.objects.get(library=librarian_name)
         librarian = library.librarian  # via OneToOneField relationship
         print(f"\nLibrarian for {library.name} Library: {librarian.name}")
     except Library.DoesNotExist:
-        print(f"\nNo library found with name '{library_name}'.")
+        print(f"\nNo library found with name '{librarian_name}'.")
     except Librarian.DoesNotExist:
-        print(f"\nNo librarian assigned to '{library_name}'.")
+        print(f"\nNo librarian assigned to '{librarian_name}'.")
 
 
 # -----------------------------
