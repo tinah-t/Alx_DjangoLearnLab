@@ -6,7 +6,10 @@ from django.conf import settings
 # from django.contrib.auth import get_user_model
 
 # User = get_user_model()
-
+class Book(models.Model):
+    title = models.CharField(max_length=200)
+    author = models.CharField(max_length=100)
+    publication_year = models.IntegerField()
 class Article(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
