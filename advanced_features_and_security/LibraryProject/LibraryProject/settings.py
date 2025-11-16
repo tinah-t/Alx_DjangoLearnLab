@@ -44,8 +44,31 @@ CSP_IMG_SRC = ("'self'",)
 CSP_FONT_SRC = ("'self'",)
 CSP_CONNECT_SRC = ("'self'",)
 
+SECURE_SSL_REDIRECT = True
+
+# HTTP Strict Transport Security (HSTS)
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Apply HSTS to subdomains
+SECURE_HSTS_PRELOAD = True 
+
 ALLOWED_HOSTS = []
 
+X_FRAME_OPTIONS = "DENY"  # Protect against clickjacking
+SECURE_CONTENT_TYPE_NOSNIFF = True  # Prevent MIME-type sniffing
+SECURE_BROWSER_XSS_FILTER = True  # Enable browser XSS protection
+
+# -----------------------------------------
+# D. Additional Recommended Security
+# -----------------------------------------
+# Prevent exposing cookie content to client-side scripts
+SESSION_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = False  # CSRF cookie must be readable by browser JS
+
+# Use secure referrer policy
+SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
+
+# Ensure the application knows it's behind a proxy like Nginx
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Application definition
 AUTH_USER_MODEL = 'bookshelf.CustomUser'
