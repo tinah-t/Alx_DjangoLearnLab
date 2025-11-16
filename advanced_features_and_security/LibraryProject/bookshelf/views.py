@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import permission_required
 from .models import Article
 from django import forms
 from .models import Book
+from .forms import SearchForm, BookForm
 
 # Anyone with 'can_view' permission
 @permission_required('bookshelf.can_view', raise_exception=True)
@@ -65,6 +66,19 @@ def search_books(request):
         books = Book.objects.filter(title__icontains=query)
 
     return render(request, "bookshelf/search_results.html", {
+        "form": form,
+        "books": books
+    })
+
+def search_books(request):
+    form = SearchForm(request.GET)
+    books = []
+
+    if form.is_valid():
+        query = form.cleaned_data['query']
+        books = Book.objects.filter(title__icontains=query)
+
+    return render(request, "books/search_results.html", {
         "form": form,
         "books": books
     })
