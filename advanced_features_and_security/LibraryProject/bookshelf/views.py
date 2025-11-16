@@ -6,6 +6,7 @@ from .models import Article
 from django import forms
 from .models import Book
 from .forms import SearchForm, BookForm
+from .forms import ExampleForm
 
 # Anyone with 'can_view' permission
 @permission_required('bookshelf.can_view', raise_exception=True)
