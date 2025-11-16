@@ -17,7 +17,8 @@ class LibraryDetailView(DetailView):
     template_name = 'relationship_app/library_detail.html'
 
 def register(request):
-    return render(request, 'relationship_app/register.html')
+    form = UserCreationForm()
+    return render(request, 'relationship_app/register.html',{'form':form})
 
 
 # def SignUpView(CreateView):
