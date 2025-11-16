@@ -29,15 +29,16 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+AUTH_USER_MODEL = 'bookshelf.CustomUser'
 
 INSTALLED_APPS = [
+    'bookshelf',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bookshelf',
 ]
 
 MIDDLEWARE = [
@@ -50,8 +51,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-LOGIN_REDIRECT_URL = "/hello"
-LOGOUT_REDIRECT_URL = "/hello"
+LOGIN_REDIRECT_URL = "/books"
+LOGOUT_REDIRECT_URL = "/books"
 
 ROOT_URLCONF = 'LibraryProject.urls'
 
@@ -101,7 +102,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-AUTH_USER_MODEL = "bookshelf.CustomUser"
+# AUTH_USER_MODEL = "bookshelf.CustomUser"
 
 
 # Internationalization
