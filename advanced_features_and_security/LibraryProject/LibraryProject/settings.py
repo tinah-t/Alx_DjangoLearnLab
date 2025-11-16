@@ -23,7 +23,26 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-3*epn7mv%$%wu!3!q-j$r66#aqyr7ozt$!i-ubzvv!d28b8l_='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+
+# SECURITY: Browser security headers
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = "DENY"
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# SECURITY: Cookies over HTTPS only
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+# SECURITY: Content Security Policy (Step 4)
+CSP_DEFAULT_SRC = ("'self'",)
+
+# Allow static files, images, and scripts ONLY from your domain
+CSP_SCRIPT_SRC = ("'self'",)
+CSP_STYLE_SRC = ("'self'",)
+CSP_IMG_SRC = ("'self'",)
+CSP_FONT_SRC = ("'self'",)
+CSP_CONNECT_SRC = ("'self'",)
 
 ALLOWED_HOSTS = []
 
@@ -33,6 +52,7 @@ AUTH_USER_MODEL = 'bookshelf.CustomUser'
 
 INSTALLED_APPS = [
     'bookshelf',
+    'csp',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -49,7 +69,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "csp.middleware.CSPMiddleware",
 ]
+
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# SECURITY: Prevent clickjacking
+X_FRAME_OPTIONS = "DENY"
+
 
 LOGIN_REDIRECT_URL = "/books"
 LOGOUT_REDIRECT_URL = "/books"

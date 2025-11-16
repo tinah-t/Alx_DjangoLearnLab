@@ -3,6 +3,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import permission_required
 from .models import Article
+from django import forms
+from .models import Book
 
 # Anyone with 'can_view' permission
 @permission_required('bookshelf.can_view', raise_exception=True)
@@ -48,3 +50,21 @@ def book_list(request):
     books = Article.objects.all()   # or Book.objects.all()
     context = {"books": books}
     return render(request, "bookshelf/book_list.html", context)
+
+class SearchForm(forms.Form):
+    query = forms.CharField(max_length=100, required=False)
+
+def search_books(request):
+    form = SearchForm(request.GET)
+
+    books = []
+
+    # FORM VALIDATION PREVENTS MALICIOUS INPUT
+    if form.is_valid():
+        query = form.cleaned_data["query"]
+        books = Book.objects.filter(title__icontains=query)
+
+    return render(request, "bookshelf/search_results.html", {
+        "form": form,
+        "books": books
+    })
