@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from .models import Library , Book
 from django.views.generic.detail import DetailView
+from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
 
 # Create your views here.
 def list_books(request):
@@ -11,6 +14,8 @@ def list_books(request):
 class LibraryDetailView(DetailView):
     model = Library
     template_name = 'relationship_app/library_detail.html'
-    # library = Library.objects.all()
-    # for libs in library:
-    #     print libs.
+
+class SignUpView(CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy('login')
+    template_name = 'relationship_app/register.html'
