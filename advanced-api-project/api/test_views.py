@@ -13,7 +13,7 @@ class BookTestCase(APITestCase):
         data = self.book
         url = reverse("book_create")
         response = self.client.post(url, data)
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data["title"], "unit test1")
 
     def testUpdateBooks(self):
         data = {
@@ -24,7 +24,7 @@ class BookTestCase(APITestCase):
     }
         url = reverse('book_update', kwargs={'pk':self.book})
         response = self.client.post(url, data)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["title"], "Updated Title")
 
     def testDeleteBooks(self):
         data = self.book
