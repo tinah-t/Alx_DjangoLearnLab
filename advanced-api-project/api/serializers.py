@@ -12,7 +12,7 @@ class BookSerializer(serializers.ModelSerializer):
         return data
 
 class AuthorSerializer(serializers.ModelSerializer):
-    books = serializers.CharField(source='book.name', read_only=True)
+    books = serializers.CharField(source='book.name', many=True, read_only=True)
     class Meta:
         model = Author
         fields = ['name','books']
