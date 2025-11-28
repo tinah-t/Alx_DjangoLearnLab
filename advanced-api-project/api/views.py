@@ -6,6 +6,8 @@ from .serializers import BookSerializer, AuthorSerializer
 from rest_framework.decorators import permission_classes, api_view
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework import status
+from rest_framework import filters
+
 
 # @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -51,3 +53,7 @@ class BookDetailView(generics.RetrieveAPIView):
 class BookListView(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+    filter_backends = [filters.SearchFilter]
+    filter_backends = [filters.OrderingFilter]
+    search_fields = ['title', 'author__name']
+    ordering_fields = ['title', 'publication_year']
