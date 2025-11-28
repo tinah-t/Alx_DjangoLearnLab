@@ -8,7 +8,7 @@ from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnl
 from rest_framework import status
 
 # @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 class BookCreateView(generics.CreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
@@ -18,7 +18,7 @@ class BookCreateView(generics.CreateAPIView):
        if Book.objects.filter(title=title).exists():
             raise serializer.errors("A book with this title already exists.")
        serializer.save()
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 class BookUpdateView(generics.UpdateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
@@ -35,19 +35,19 @@ class BookUpdateView(generics.UpdateAPIView):
             raise PermissionError("Another book with this title already exists.")
 
         serializer.save()
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 class BookDeleteView(generics.DestroyAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     lookup_field = 'pk'
 
-# @permission_classes([IsAuthenticatedOrReadOnly])
+@permission_classes([IsAuthenticatedOrReadOnly])
 class BookDetailView(generics.RetrieveAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     lookup_field = 'pk'
 
-# @permission_classes([IsAuthenticatedOrReadOnly])
+@permission_classes([IsAuthenticatedOrReadOnly])
 class BookListView(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
