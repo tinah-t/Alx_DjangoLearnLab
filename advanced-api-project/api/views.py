@@ -4,7 +4,7 @@ from .models import Book, Author
 from rest_framework.response import Response
 from .serializers import BookSerializer, AuthorSerializer
 from rest_framework.decorators import permission_classes, api_view
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework import status
 
 # @api_view(['GET'])
