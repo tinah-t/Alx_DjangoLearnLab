@@ -6,7 +6,7 @@ from .serializers import BookSerializer, AuthorSerializer
 from rest_framework.decorators import permission_classes, api_view
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework import status
-from rest_framework import filters
+# from django_filters import rest_framework
 
 
 # @api_view(['GET'])
