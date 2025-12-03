@@ -79,14 +79,15 @@ WSGI_APPLICATION = 'django_blog.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+# psql -U postgres -p 5000 \]
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'masteruser',
-        'PASSWORD': '12345678',
-        'HOST': 'w3-django-project.cdxmgq9zqqlr.us-east-1.rds.amazonaws.com',
-        'PORT': '5432'
+        'NAME': 'blog_db',
+        'USER': 'test',
+        'PASSWORD': '1234',
+        'HOST': 'localhost',
+        'PORT': '5000'
     }
 }
 
