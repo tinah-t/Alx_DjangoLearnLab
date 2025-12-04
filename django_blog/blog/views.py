@@ -70,7 +70,7 @@ class BlogDetailView(DetailView):
 
 class BlogDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
-    template_name = 'blog/post_delete.html'
+    template_name = 'blog/posts_delete.html'
     fields = ['title', 'content','author']
     context_object_name = 'post'
     success_url = '/posts/'
