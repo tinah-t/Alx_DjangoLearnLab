@@ -1,9 +1,16 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from .models import Post
+from django import forms
 # Create your views here.
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'content']
+
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -37,16 +44,23 @@ class BlogListView(ListView):
 
 class BlogCreateView(CreateView):
     model = Post
+    form_class = PostForm
     template_name = 'blog/blog_create.html'
-    fields = ['title', 'content','author']
+    fields = ['title', 'content']
     success_url = '/posts/'
+    def form_valid(self, form):
+        form.instance.author = self.request.user  # Auto-set author
+        return super().form_valid(form)
 
 class BlogUpdateView(UpdateView):
     model = Post
+    form_class = PostForm
     template_name = 'blog/blog_update.html'
-    fields = ['title', 'content','author']
     success_url = '/posts/'
-
+    def form_valid(self, form):
+        form.instance.author = self.request.user  # Auto-set author
+        return super().form_valid(form)
+    
 class BlogDetailView(DetailView):
     model = Post
     template_name = 'blog/blog_detail.html'
