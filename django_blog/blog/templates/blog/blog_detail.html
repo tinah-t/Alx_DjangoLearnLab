@@ -1,0 +1,21 @@
+{% extends "blog/base.html" %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Blog Details</title>
+  </head>
+  <body>
+    <h1>{{ object.author }}</h1>
+    <h2>Blog by {{object.author}}:</h2>
+    <ul>
+      <ol>
+        {{ object.title }} by {{ object.author }}
+      </ol>
+      <ol>
+        {{object.content}}
+      </ol>
+    </ul>
+  </body>
+</html>
+{% endblock %}
