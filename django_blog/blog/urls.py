@@ -11,8 +11,8 @@ urlpatterns = [
     path('posts/new/', BlogCreateView.as_view(),name='blog_create'),
     path('posts/', BlogListView.as_view(),name='blog_list'),
     path('posts/<int:pk>/', BlogDetailView.as_view(),name='blog_detail'),
-    path('posts/<int:pk>/edit', BlogUpdateView.as_view(),name='blog_update'),
-    path('posts/<int:pk>/delete', BlogDeleteView.as_view(),name='blog_delete'),
+    path('posts/<int:pk>/update/', BlogUpdateView.as_view(),name='blog_update'),
+    path('posts/<int:pk>/delete/', BlogDeleteView.as_view(),name='blog_delete'),
 ]
 
 # {% if user.is_authenticated %}
