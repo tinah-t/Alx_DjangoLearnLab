@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from .models import Post
@@ -42,33 +42,38 @@ class BlogListView(ListView):
     template_name = 'blog/blog_list.html'
     context_object_name = 'posts'
 
-class BlogCreateView(CreateView):
+class BlogCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
-    template_name = 'blog/blog_create.html'
-    fields = ['title', 'content']
+    template_name = 'blog/post_create.html'
     success_url = '/posts/'
     def form_valid(self, form):
         form.instance.author = self.request.user  # Auto-set author
         return super().form_valid(form)
 
-class BlogUpdateView(UpdateView):
+class BlogUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     form_class = PostForm
-    template_name = 'blog/blog_update.html'
+    template_name = 'blog/post_update.html'
     success_url = '/posts/'
     def form_valid(self, form):
         form.instance.author = self.request.user  # Auto-set author
         return super().form_valid(form)
+    def test_func(self):
+        post = self.get_object()
+        return self.request.user == post.author
     
 class BlogDetailView(DetailView):
     model = Post
-    template_name = 'blog/blog_detail.html'
+    template_name = 'blog/post_detail.html'
     context_object_name = 'post'
 
-class BlogDeleteView(DeleteView):
+class BlogDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
-    template_name = 'blog/blog_delete.html'
+    template_name = 'blog/post_delete.html'
     fields = ['title', 'content','author']
     context_object_name = 'post'
     success_url = '/posts/'
+    def test_func(self):
+        post = self.get_object()
+        return self.request.user == post.author
