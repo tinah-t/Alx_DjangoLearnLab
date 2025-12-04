@@ -1,5 +1,6 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 # Create your views here.
 def signup(request):
@@ -10,4 +11,19 @@ def signup(request):
             return redirect('login')
     else:
         form = UserCreationForm()
-    return render(request, 'blog/signup.html', {'form':form})
+    return render(request, 'blog/register.html', {'form':form})
+@login_required
+def profile_view(request):
+    return render(request, "blog/profile.html")
+
+@login_required
+def edit_profile(request):
+    if request.method == "POST":
+        form = UserChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect("profile")
+    else:
+        form = UserChangeForm(instance=request.user)
+
+    return render(request, "blog/edit_profile.html", {"form": form})
