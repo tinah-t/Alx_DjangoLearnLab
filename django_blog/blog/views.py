@@ -142,7 +142,7 @@ class PostSearchView(ListView):
             Q(content__icontains=query) |
             Q(tags__name__icontains=query)
         ).distinct()
-class PostsByTagView(ListView):
+class PostByTagListView(ListView):
     model = Post
     template_name = "blog/posts_by_tag.html"
     context_object_name = "posts"
