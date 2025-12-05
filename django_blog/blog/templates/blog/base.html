@@ -29,6 +29,10 @@
     </header>
 
     <div class="content">
+      <form method="GET" action="{% url 'post_search' %}">
+        <input type="text" name="q" placeholder="Search posts..." />
+      </form>
+
       {% block content %}
       <!-- Page-specific content goes here -->
       {% endblock %}

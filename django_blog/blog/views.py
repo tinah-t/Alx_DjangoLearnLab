@@ -3,9 +3,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
-from .models import Post, Comment
+from .models import Post, Comment, Tag
 from .forms import CommentForm
 from django import forms
+from django.db.models import Q
 from django.urls import reverse
 # Create your views here.
 class PostForm(forms.ModelForm):
@@ -127,3 +128,25 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def get_success_url(self):
         return reverse("blog_detail", kwargs={"pk": self.object.post.pk})
+
+
+class PostSearchView(ListView):
+    model = Post
+    template_name = "blog/post_search.html"
+    context_object_name = "posts"
+
+    def get_queryset(self):
+        query = self.request.GET.get("q", "")
+        return Post.objects.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query) |
+            Q(tags__name__icontains=query)
+        ).distinct()
+class PostsByTagView(ListView):
+    model = Post
+    template_name = "blog/posts_by_tag.html"
+    context_object_name = "posts"
+
+    def get_queryset(self):
+        tag = get_object_or_404(Tag, name=self.kwargs["tag_name"])
+        return Post.objects.filter(tags=tag)

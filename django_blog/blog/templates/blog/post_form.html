@@ -1,0 +1,8 @@
+{% extends "blog/base.html" %} {% block content %}
+<p>
+  <strong>Tags:</strong>
+  {% for tag in object.tags.all %}
+  <a href="{% url 'posts_by_tag' tag.name %}">{{ tag.name }}</a>{% if not
+  forloop.last %}, {% endif %} {% empty %} No tags {% endfor %}
+</p>
+{% endblock %}

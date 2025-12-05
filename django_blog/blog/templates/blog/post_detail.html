@@ -5,7 +5,12 @@
 <p>{{ object.content }}</p>
 
 <hr />
-
+<p>
+  <strong>Tags:</strong>
+  {% for tag in object.tags.all %}
+  <a href="{% url 'posts_by_tag' tag.name %}">{{ tag.name }}</a>
+  {% if not forloop.last %}, {% endif %} {% empty %} No tags {% endfor %}
+</p>
 <h2>Comments</h2>
 
 {% for comment in comments %}
