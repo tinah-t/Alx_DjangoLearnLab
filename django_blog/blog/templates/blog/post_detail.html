@@ -1,21 +1,36 @@
 {% extends "blog/base.html" %} {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Blog Details</title>
-  </head>
-  <body>
-    <h1>{{ object.author }}</h1>
-    <h2>Blog by {{object.author}}:</h2>
-    <ul>
-      <ol>
-        {{ object.title }} by {{ object.author }}
-      </ol>
-      <ol>
-        {{object.content}}
-      </ol>
-    </ul>
-  </body>
-</html>
-{% endblock %}
+
+<h1>{{ object.title }}</h1>
+<p>By {{ object.author }}</p>
+<p>{{ object.content }}</p>
+
+<hr />
+
+<h2>Comments</h2>
+
+{% for comment in comments %}
+<div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px">
+  <p>{{ comment.content }}</p>
+  <small>By {{ comment.author }} | {{ comment.created_at }}</small>
+
+  {% if user == comment.author %}
+  <br />
+  <a href="{% url 'comment_edit' comment.pk %}">Edit</a> |
+  <a href="{% url 'comment_delete' comment.pk %}">Delete</a>
+  {% endif %}
+</div>
+{% empty %}
+<p>No comments yet.</p>
+{% endfor %}
+
+<hr />
+
+{% if user.is_authenticated %}
+<h3>Add a Comment</h3>
+<form method="POST" action="{% url 'comment_create' object.pk %}">
+  {% csrf_token %} {{ comment_form.as_p }}
+  <button type="submit">Add Comment</button>
+</form>
+{% else %}
+<p><a href="{% url 'login' %}">Login</a> to comment.</p>
+{% endif %} {% endblock %}

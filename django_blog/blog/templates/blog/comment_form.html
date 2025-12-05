@@ -1,0 +1,15 @@
+<!-- templates/blog/comment_form.html -->
+{% extends "blog/base.html" %} {% block content %}
+<h2>{{ view.object.pk|yesno:"Edit Comment,Add Comment" }}</h2>
+<form method="POST">
+  {% csrf_token %} {{ form.as_p }}
+  <button type="submit">Save</button>
+</form>
+
+{% if view.object %}
+<!-- Edit mode -->
+<a href="{% url 'blog_detail' view.object.post.pk %}">Cancel</a>
+{% else %}
+<!-- Create mode -->
+<a href="{% url 'blog_detail' post_id %}">Cancel</a>
+{% endif %} {% endblock %}
