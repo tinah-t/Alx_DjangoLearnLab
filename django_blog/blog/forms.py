@@ -10,6 +10,15 @@ class CommentForm(forms.ModelForm):
             'content': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Write a comment...'})
         }
 
+class TagWidget(forms.TextInput):
+    """Allow users to enter tags as comma-separated text."""
+    placeholder = "Enter tags separated by commas"
+
+    def format_value(self, value):
+        if value and hasattr(value, "all"):
+            return ", ".join([tag.name for tag in value.all()])
+        return value
+
 class PostForm(forms.ModelForm):
     # Comma-separated tags: "django, python, api"
     tags = forms.CharField(required=False, help_text="Add tags separated by commas")
