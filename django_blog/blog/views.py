@@ -97,12 +97,12 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
         ctx["pk"] = self.kwargs["pk"]
         return ctx
     def form_valid(self, form):
-        post = get_object_or_404(Post, pk=self.kwargs["post_id"])
+        post = get_object_or_404(Post, pk=self.kwargs["pk"])
         form.instance.post = post
         form.instance.author = self.request.user
         return super().form_valid(form)
     def get_success_url(self):
-        return reverse("blog_detail", kwargs={"pk": self.kwargs["post_id"]})
+        return reverse("blog_detail", kwargs={"pk": self.kwargs["pk"]})
    
 
 

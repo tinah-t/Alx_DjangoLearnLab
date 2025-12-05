@@ -11,5 +11,5 @@
 <a href="{% url 'blog_detail' view.object.post.pk %}">Cancel</a>
 {% else %}
 <!-- Create mode -->
-<a href="{% url 'blog_detail' post_id %}">Cancel</a>
+<a href="{% url 'blog_detail' pk %}">Cancel</a>
 {% endif %} {% endblock %}
