@@ -106,7 +106,7 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
    
 
 
-class CommentEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Comment
     form_class = CommentForm
     template_name = "blog/comment_form.html"
