@@ -10,7 +10,7 @@ class CommentForm(forms.ModelForm):
             'content': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Write a comment...'})
         }
 
-class TagWidget(forms.TextInput):
+class TagWidget():
     """Allow users to enter tags as comma-separated text."""
     placeholder = "Enter tags separated by commas"
 
