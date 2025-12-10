@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.authtoken.models import Token
 from .models import CustomerUser
 from .serializers import RegisterSerializer, LoginSerializer, UserSerializer
@@ -14,7 +15,7 @@ User = CustomerUser
 
 class UserProfileView(generics.RetrieveUpdateAPIView):
     serializer_class = UserSerializer
-    authentication_classes = [TokenAuthentication]
+    authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get_object(self):
@@ -45,13 +46,12 @@ class LoginView(generics.GenericAPIView):
     def post(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        username = serializer.validated_data["username"]
-        password = serializer.validated_data["password"]
+        # username = serializer.validated_data["username"]
+        # password = serializer.validated_data["password"]
+        # user = authenticate(username=username, password=password)
+        user = serializer.validated_data["user"]
+        tokens = create_jwt_pair_for_user(user)
 
-        # user = serializer.validated_data["user"]
-        # token, _ = Token.objects.get_or_create(user=user)
-        user = authenticate(username=username, password=password)
-        
         if user is not None:
 
             tokens = create_jwt_pair_for_user(user)

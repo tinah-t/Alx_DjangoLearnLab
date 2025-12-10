@@ -9,6 +9,7 @@ from rest_framework.validators import UniqueValidator
 User = CustomerUser
 
 class UserSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = User
         fields = [
@@ -42,9 +43,9 @@ class RegisterSerializer(serializers.ModelSerializer):
                 **validated_data
             )
 
-        user.set_password(password)
-        user.save()
-        Token.objects.create(user=user)
+        # user.set_password(password)
+        # user.save()
+        # Token.objects.create(user=user)
         return user
 
 
@@ -61,8 +62,3 @@ class LoginSerializer(serializers.Serializer):
             raise serializers.ValidationError("Invalid username or password.")
         attrs["user"] = user
         return attrs
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CustomerUser
-        fields = ['bio', 'profile_picture']

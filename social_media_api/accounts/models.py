@@ -11,7 +11,7 @@ class CustomerUser(AbstractUser):
         symmetrical=False,
         blank=True
     )
-    groups = models.ManyToManyField(Group, related_name='customuser_set')
+    groups = models.ManyToManyField(Group, related_name='customuser_set',blank=True)
     user_permissions = models.ManyToManyField(Permission,related_name='customuser_set_permissions',blank=True)
 
     def __str__(self):
