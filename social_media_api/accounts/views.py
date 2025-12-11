@@ -15,9 +15,6 @@ from django.shortcuts import get_object_or_404
 
 
 User = CustomerUser
-
-
-
 class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
     permission_classes = [AllowAny]
