@@ -32,3 +32,8 @@ class Like(models.Model):
         unique_together = ('post', 'user')
     def __str__(self):
         return f"{self.user.username} liked {self.post.id}"
+    
+# post = Post.objects.get(id=1)
+# post.likes.count()
+#  Django interprets it as:
+# Give me all Like objects where post = this post
