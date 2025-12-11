@@ -104,6 +104,7 @@ class FeedView(generics.ListAPIView):
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication, SessionAuthentication]
+    # permissions.IsAuthenticated
     def get_queryset(self):
         all_users = CustomerUser.objects.all()
         following_users = self.request.user.following.all()
