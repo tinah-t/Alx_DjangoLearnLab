@@ -44,18 +44,19 @@ class LikePostView(APIView):
     authentication_classes = [JWTAuthentication, SessionAuthentication]
     def post(self, request, pk):
         user = request.user
-        post = get_object_or_404(Post, id=pk)
-        if Like.objects.filter(user=user,post=post).exists():
-            return Response({"detail":"You have already liked this post."},status=status.HTTP_400_BAD_REQUEST)
-        Like.objects.create(user=user,post=post)
-        if post.author != user:
-            Notification.objects.create(
-                recipient=post.author,
-                actor=user,
-                verb="liked your post",
-                target=post
-            )
-        return Response({"detail": "Post liked successfully."}, status=status.HTTP_201_CREATED)
+        post = generics.get_object_or_404(Post, id=pk)
+        like, created = Like.objects.get_or_create(user=request.user, post=post)
+
+        if not created:
+            return Response({"detail": "You already liked this post."}, status=status.HTTP_400_BAD_REQUEST)
+        Notification.objects.create(
+            recipient=post.author,
+            actor=request.user,
+            verb="liked your post",
+            target=post
+        )
+
+        return Response({"detail": "Post liked."}, status=status.HTTP_201_CREATED)
 
 class UnlikePostView(APIView):
     permission_classes = [IsAuthenticated]
