@@ -65,10 +65,11 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user
-
+#  permissions.IsAuthenticated
 class FollowUserView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication, SessionAuthentication]
+    all_users = CustomerUser.objects.all()
     def post(self, request, user_id):
         target_user = get_object_or_404(CustomerUser, id=user_id)
         if request.user.id == target_user.id:
@@ -83,6 +84,7 @@ class FollowUserView(APIView):
 class UnfollowUserView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication, SessionAuthentication]
+    all_users = CustomerUser.objects.all()
     def post(self, request, user_id):
         target_user = get_object_or_404(CustomerUser, id=user_id)
         if request.user.id == target_user.id:
@@ -102,6 +104,5 @@ class FeedView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication, SessionAuthentication]
     def get_queryset(self):
-        all_users = CustomerUser.objects.all()
         following_users = self.request.user.following.all()
         return Post.objects.filter(author__in=following_users).order_by('-created_at')
