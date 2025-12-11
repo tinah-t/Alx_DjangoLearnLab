@@ -7,10 +7,12 @@ class CustomerUser(AbstractUser):
     profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
     followers = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
-        related_name='following',
+        related_name='follower',
         symmetrical=False,
         blank=True
     )
-   
+
+    following = models.ManyToManyField('self', related_name='following',blank=True)
+
     def __str__(self):
         return self.email
