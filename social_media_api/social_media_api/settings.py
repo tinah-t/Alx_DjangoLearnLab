@@ -23,9 +23,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-bcqr!qa0evg258d1apxazqy046owxut&%wfss=1to6blepln22'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "your-domain.com",
+    "www.your-domain.com",
+]
 
 
 # Application definition
@@ -105,6 +110,16 @@ DATABASES = {
     }
 }
 
+SECURE_BROWSER_XSS_FILTER = True
+
+# ✔ Prevent content sniffing (security header)
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# ✔ Clickjacking protection
+X_FRAME_OPTIONS = "DENY"
+
+# ✔ Force HTTPS in production
+SECURE_SSL_REDIRECT = True 
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
