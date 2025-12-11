@@ -44,7 +44,7 @@ class LikePostView(APIView):
     authentication_classes = [JWTAuthentication, SessionAuthentication]
     def post(self, request, pk):
         user = request.user
-        post = generics.get_object_or_404(Post, id=pk)
+        post = generics.get_object_or_404(Post, pk=pk)
         like, created = Like.objects.get_or_create(user=request.user, post=post)
 
         if not created:
