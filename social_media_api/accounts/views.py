@@ -101,6 +101,7 @@ class UnfollowUserView(APIView):
         )
 
 class FeedView(generics.ListAPIView):
+    #  permissions.IsAuthenticated
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication, SessionAuthentication]
