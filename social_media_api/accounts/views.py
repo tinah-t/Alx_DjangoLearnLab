@@ -69,7 +69,7 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
 class FollowUserView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication, SessionAuthentication]
-    all_users = CustomerUser.objects.all()
+    #  CustomUser.objects.all()
     def post(self, request, user_id):
         target_user = get_object_or_404(CustomerUser, id=user_id)
         if request.user.id == target_user.id:
@@ -85,6 +85,7 @@ class UnfollowUserView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication, SessionAuthentication]
     all_users = CustomerUser.objects.all()
+    #  CustomUser.objects.all()
     def post(self, request, user_id):
         target_user = get_object_or_404(CustomerUser, id=user_id)
         if request.user.id == target_user.id:
