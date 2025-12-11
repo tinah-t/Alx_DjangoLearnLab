@@ -31,8 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'posts',
     'accounts',
+    'posts',
     'rest_framework',
     'rest_framework.authtoken',
     'django.contrib.admin',
@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-AUTH_USER_MODEL = "accounts.CustomerUser"
+AUTH_USER_MODEL = 'accounts.CustomerUser'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

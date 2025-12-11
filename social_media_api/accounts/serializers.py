@@ -8,17 +8,6 @@ from rest_framework.validators import UniqueValidator
 
 User = CustomerUser
 
-class UserSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = User
-        fields = [
-            'id', 'username', 'email', 'bio', 'profile_picture',
-            'followers', 'following'
-        ]
-        read_only_fields = ['followers', 'following']
-
-
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         validators=[UniqueValidator(queryset=User.objects.all())]
@@ -62,3 +51,14 @@ class LoginSerializer(serializers.Serializer):
             raise serializers.ValidationError("Invalid username or password.")
         attrs["user"] = user
         return attrs
+
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = [
+            'id', 'username', 'email', 'bio', 'profile_picture',
+            'followers', 'following'
+        ]
+        read_only_fields = ['followers', 'following']
+

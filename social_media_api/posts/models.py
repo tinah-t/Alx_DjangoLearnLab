@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-
+from accounts.models import CustomerUser
 #  Comment should reference both Post (ForeignKey) and User (author), with additional fields for content, created_at, and updated_at.
-User = get_user_model()
+User = CustomerUser
 
 class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE,related_name="authors")
