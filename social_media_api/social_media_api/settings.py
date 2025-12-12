@@ -31,6 +31,7 @@ ALLOWED_HOSTS = [
 
 # Application definition
 #PORT:8743
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_collected')
 INSTALLED_APPS = [
     'accounts',
     'posts',
