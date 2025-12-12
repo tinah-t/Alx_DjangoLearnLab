@@ -30,7 +30,7 @@ ALLOWED_HOSTS = [
 
 
 # Application definition
-
+#PORT:8743
 INSTALLED_APPS = [
     'accounts',
     'posts',
